@@ -13,9 +13,11 @@ wget -O $WD/res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/course
 gunzip -k $WD/res/contaminants.fasta.gz
 
 
-
-# Index the contaminants file
+#Index the contaminants file
+mkdir -p  res/contaminants_idx
 bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
+
+
 
 # Merge the samples into a single file
 for sid in $(<list_of_sample_ids) #TODO
