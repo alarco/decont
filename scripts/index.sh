@@ -3,4 +3,4 @@
 
 # The STAR command is provided for you. You should replace the parts surrounded by "<>" and uncomment it.
 
-# STAR --runThreadN 4 --runMode genomeGenerate --genomeDir <outdir> --genomeFastaFiles <genomefile> --genomeSAindexNbases 9
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir $WD/res/contaminants_idx --genomeFastaFiles $WD/res --genomeSAindexNbases 9
