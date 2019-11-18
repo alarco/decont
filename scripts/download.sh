@@ -3,3 +3,5 @@
 
 
 wget -P $2 $1
+#wget -O $WD/res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz
+#gunzip $WD/res/contaminants.fasta.gz

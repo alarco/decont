@@ -7,8 +7,12 @@ done
 
 
 
-# Download the contaminants fasta file, and uncompress it
-bash scripts/download.sh <contaminants_url> res yes #TODO
+#Download the contaminants fasta file, and uncompress it
+#bash scripts/download.sh <contaminants_url> res yes #TODO
+wget -O $WD/res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz
+gunzip -k $WD/res/contaminants.fasta.gz
+
+
 
 # Index the contaminants file
 bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
