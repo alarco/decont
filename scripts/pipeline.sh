@@ -1,8 +1,22 @@
 #Download all the files specified in data/filenames
 
+for url in $(cat data/urls) #Hacemos una búsqueda a todas las urls del archivo url
+do
+    bash scripts/download.sh $url data
+done
+
+
+
+# Download the contaminants fasta file, and uncompress it
+bash scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes #TODO
+
+
+
+#Download all the files specified in data/filenames
+
 for url in $(cat data/urls) #TODO
 do
-    bash scripts/download.sh $url data yes
+    bash scripts/download.sh $url data
 done
 
 

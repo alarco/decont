@@ -1,7 +1,13 @@
 # This script should download the file specified in the first argument ($1), place it in the directory specified in the second argument, 
 # and *optionally* uncompress the downloaded file with gunzip if the third argument contains the word "yes".
 
+if [ "$3" == "yes" ]
+then
+	wget -O $2/$(basename $1) $1
+	echo ",----------------------------------"
+	gunzip -k $2/$(basename $1)
+	echo "----------------------------------"
+else
+	wget -P $2 $1
+fi
 
-wget -P $2 $1
-#wget -O $WD/res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz
-#gunzip $WD/res/contaminants.fasta.gz
