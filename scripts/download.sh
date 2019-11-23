@@ -4,9 +4,7 @@
 if [ "$3" == "yes" ]
 then
 	wget -O $2/$(basename $1) $1
-	echo ",----------------------------------"
 	gunzip -k $2/$(basename $1)
-	echo "----------------------------------"
 else
 	wget -P $2 $1
 fi
