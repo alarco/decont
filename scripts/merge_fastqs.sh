@@ -3,4 +3,4 @@
 # The directory containing the samples is indicated by the first argument.
 
 
-cat file1.tar.gz file2.tar.gz > merged.tar.gz
+cat $1/$3 >> $2/$(echo $3|cut -d "-" -f1).fastq.gz

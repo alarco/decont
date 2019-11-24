@@ -23,8 +23,8 @@ done
 
 #Download the contaminants fasta file, and uncompress it
 #bash scripts/download.sh <contaminants_url> res yes #TODO
-wget -O $WD/res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz
-gunzip -k $WD/res/contaminants.fasta.gz
+wget -O res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz
+gunzip -k res/contaminants.fasta.gz
 
 
 #Index the contaminants file
@@ -34,10 +34,14 @@ bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
 
 
 # Merge the samples into a single file
-for sid in $(<list_of_sample_ids) #TODO
+mkdir -p out/merged
+for sid in $(ls data/*.fastq.gz|cut -d "/" -f2| sort) #Busca los archivos a unir
 do
-    bash scripts/merge_fastqs.sh data out/merged $sid
+
+        bash scripts/merge_fastqs.sh data out/merged $sid
 done
+
+
 
 # TODO: run cutadapt for all merged files
 # cutadapt -m 18 -a TGGAATTCTCGGGTGCCAAGG --discard-untrimmed -o <trimmed_file> <input_file> > <log_file>
