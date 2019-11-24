@@ -65,3 +65,23 @@ done
 # (this should be a single log file, and information should be *appended* to it on each run)
 # - cutadapt: Reads with adapters and total basepairs
 # - star: Percentages of uniquely mapped reads, reads mapped to multiple loci, and to too many loci
+for sid in $(ls out/merged/*.fastq.gz|cut -d "/" -f3| cut -d "." -f1)
+do
+        for log in $(ls log/cutadapt/$sid.log)
+        do
+                echo $sid >> log/pipeline.log
+                echo "==========================================" >> log/pipeline.log
+                cat log/cutadapt/$sid.log| grep "^Reads with adapters*"  >> log/pipeline.log
+                cat log/cutadapt/$sid.log| grep "^Total basepairs*"  >> log/pipeline.log
+                echo >> log/pipeline.log
+        done
+
+        for log in $(ls out/star/$sid/Log.final.out)
+        do
+                cat out/star/$sid/Log.final.out | grep "Uniquely mapped reads %" >> log/pipeline.log
+                cat out/star/$sid/Log.final.out | grep "% of reads mapped to multiple loci" >> log/pipeline.log
+                cat out/star/$sid/Log.final.out | grep "% of reads mapped to too many loci" >> log/pipeline.log
+                echo >> log/pipeline.log
+        done
+done
+
