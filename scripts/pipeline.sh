@@ -53,13 +53,13 @@ done
 
 
 #TODO: run STAR for all trimmed files
-for fname in out/trimmed/*.fastq.gz
+for fname in $(ls out/trimmed/*.fastq.gz)
 do
-    # you will need to obtain the sample ID from the filename
-    sid=#TODO
-    # mkdir -p out/star/$sid
-    # STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn <input_file> --readFilesCommand zcat --outFileNamePrefix <output_directory>
-done 
+        sid=$(basename $(echo $fname)|cut -d "." -f1)
+        mkdir -p out/star/${sid}
+        STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn ${fname} --readFilesCommand zcat --ou$
+done
+
 
 # TODO: create a log file containing information from cutadapt and star logs
 # (this should be a single log file, and information should be *appended* to it on each run)
