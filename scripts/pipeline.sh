@@ -1,6 +1,5 @@
 #Download all the files specified in data/filenames
-
-for url in $(cat data/urls) #Hacemos una búsqueda a todas las urls del archivo url
+for url in $(cat data/urls) 
 do
     bash scripts/download.sh $url data
 done
@@ -8,23 +7,8 @@ done
 
 
 # Download the contaminants fasta file, and uncompress it
-bash scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes #TODO
+bash scripts/download.sh https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz res yes 
 
-
-
-#Download all the files specified in data/filenames
-
-for url in $(cat data/urls) #TODO
-do
-    bash scripts/download.sh $url data
-done
-
-
-
-#Download the contaminants fasta file, and uncompress it
-#bash scripts/download.sh <contaminants_url> res yes #TODO
-wget -O res/contaminants.fasta.gz https://bioinformatics.cnio.es/data/courses/decont/contaminants.fasta.gz
-gunzip -k res/contaminants.fasta.gz
 
 
 #Index the contaminants file
@@ -35,9 +19,8 @@ bash scripts/index.sh res/contaminants.fasta res/contaminants_idx
 
 # Merge the samples into a single file
 mkdir -p out/merged
-for sid in $(ls data/*.fastq.gz|cut -d "/" -f2| sort) #Busca los archivos a unir
+for sid in $(ls data/*.fastq.gz|cut -d "/" -f2| sort)
 do
-
         bash scripts/merge_fastqs.sh data out/merged $sid
 done
 
@@ -52,13 +35,15 @@ do
 done
 
 
+
 #TODO: run STAR for all trimmed files
 for fname in $(ls out/trimmed/*.fastq.gz)
 do
         sid=$(basename $(echo $fname)|cut -d "." -f1)
         mkdir -p out/star/${sid}
-        STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn ${fname} --readFilesCommand zcat --ou$
+        STAR --runThreadN 4 --genomeDir res/contaminants_idx --outReadsUnmapped Fastx --readFilesIn ${fname} --readFilesCommand zcat --outFileNamePrefix out/star/${sid}/
 done
+
 
 
 # TODO: create a log file containing information from cutadapt and star logs
@@ -73,7 +58,6 @@ do
                 echo "==========================================" >> log/pipeline.log
                 cat log/cutadapt/$sid.log| grep "^Reads with adapters*"  >> log/pipeline.log
                 cat log/cutadapt/$sid.log| grep "^Total basepairs*"  >> log/pipeline.log
-                echo >> log/pipeline.log
         done
 
         for log in $(ls out/star/$sid/Log.final.out)
