@@ -1,5 +1,3 @@
-set -x
-
 # This script should index the genome file specified in the first argument,
 # creating the index in a directory specified by the second argument.
 
